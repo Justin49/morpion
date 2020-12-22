@@ -1,0 +1,13 @@
+
+body {
+
+    background-color: #696969;
+}
+
+
+#canvas {
+
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+}
