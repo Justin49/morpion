@@ -105,4 +105,24 @@ function rechercherVainqueur(bouton, joueurs, tour) {
         bouton[8].backgroundColor = "#006400";
         return true;
     }
-} 
+}
+
+// Fonction qui va être appeler lors d'un match nul
+function matchNul(bouton) {
+
+    // on parcours toutes les cases de la grille du morpion
+    for(var i = 0; longueur = bouton.length, i < longueur; i++) {
+
+        // si toutes les cases ne sont pas compléter et/ou disponible
+        if(bouton[i].innerHTML.length == 0) {
+
+            return false;
+
+        } else {
+
+            return true;
+        }
+
+    }
+}
+
