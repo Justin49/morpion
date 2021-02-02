@@ -3,6 +3,12 @@ body {
     background-color: #696969;
 }
 
+h1 {
+
+    text-align: center;
+    color: yellow;
+}
+
 #jeu {
 
     position: relative;
@@ -10,10 +16,10 @@ body {
     top: 100px;
 }
 
-.case {
+button {
 
     margin: 10px;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
 
 }
