@@ -13,31 +13,6 @@
 
 */
 
-function boucleDuJeu() {
-
-    // Je selectionne les bouttons de toute la grille du morpion
-    var carre = document.querySelectorAll("#jeu button");
-    console.log(carre);
-
-    // Les 2 joueurs sont représentés par un des symboles suivant, X ou O
-    var joueurs = ["X", "O"];
-
-    // Une variable qui va représenter le nombre de tour mis au départ à 0, car on commence au tour 1
-    var tour = 0;
-
-    // Une variable boolean qui indique que le jeu est finis ou non, valeur par défault à false
-    var jeuEstFini = false;
-
-    // Une variable qui va venir modifier l'état du statut du jeu, par exemple en affichant des messages au joueur
-    var afficheMessage = new Affichage(document.querySelector("#statutDuJeu"));
-    afficheur.envoyerMessage(
-
-        "Le jeu est sur le point de commencer ! <br/> Joueur " + joueurs[tour] + "C'est votre tour."
-    );
-}
-
-
-
 // Fonction qui indique si une case est disponible avec le bouton en parmètre
 function estDisponible(bouton) {
 
@@ -120,7 +95,7 @@ function rechercherVainqueur(bouton, joueurs, tour) {
 function matchNul(bouton) {
 
     // on parcours toutes les cases de la grille du morpion
-    for(var i = 0; longueur = bouton.length, i < longueur; i++) {
+    for(var i = 0; longueurGrilleMorpion = bouton.length, i < longueurGrilleMorpion; i++) {
 
         // si toutes les cases ne sont pas compléter et/ou disponible
         if(bouton[i].innerHTML.length == 0) {
@@ -153,4 +128,94 @@ var Afficheur = function(element) {
         envoyerMessage: envoyerTexte()
     };
 };
+
+function boucleDuJeu() {
+
+    // Je selectionne les bouttons de toute la grille du morpion
+    var carre = document.querySelectorAll("#jeu button");
+    console.log(carre);
+
+    // Les 2 joueurs sont représentés par un des symboles suivant, X ou O
+    var joueurs = ["X", "O"];
+
+    // Une variable qui va représenter le nombre de tour mis au départ à 0, car on commence au tour 1
+    var tour = 0;
+
+    // Une variable boolean qui indique que le jeu est finis ou non, valeur par défault à false
+    var jeuEstFini = false;
+
+    // Une variable qui va venir modifier l'état du statut du jeu, par exemple en affichant des messages au joueur
+    var afficheur = new Affichage(document.querySelector("#statutDuJeu"));
+
+    // On affiche un message comme quoi le jeu est sur le point de commencer
+    afficheur.envoyerMessage(
+
+        "Le jeu est sur le point de commencer ! <br/> Joueur " + joueurs[tour] + "C'est votre tour."
+    );
+
+    // On parcours la grille du morpion à chaque tour de jeu
+    for(var i = 0; longueurGrilleMorpion = bouton.length, i < longueurGrilleMorpion; i++) {
+
+        // On applique un écouteur d'évènement de type click sur toutes les cases de la grille du morpion
+        bouton[i].addEventListener("click", function() {
+
+            // Si le jeu n'est pas fini alors on retourne rien
+            if(jeuEstFini) return;
+
+            // Si le joueur clique sur une case qui n'est pas disponible alors on affiche un message
+            if(!estDisponible(bouton)) {
+
+                afficheur.envoyerMessage(
+
+                    "Case occupée ! <br/> Joueur " + joueurs[tour] + "C'est toujours à vous !"
+                );
+
+              // Si la case est disponible, si elle n'à pas encore été prise par l'autre joueur
+            } else {
+
+                // Le joueur peut jouer son coup
+                mettreSymboleDansCase(bouton, joueurs[tour]);
+                // On affecte le résultat vrai ou faux de recherche un vainqueur à la variable jeuEstFini
+                jeuEstFini = rechercherVainqueur(bouton, joueurs, tour);
+
+                // Si le jeu est fini
+                if(jeuEstFini) {
+
+                    // On déclare un des deux joueurs gagnant
+                    afficheur.envoyerMessage(
+
+                        "Le joueur " + joueurs[tour] + 'a gagné ! <br/> <a href="index.html">Rejouer</a>'
+                    );
+
+                    return;
+                }
+
+                // Si le match est nul
+                if(matchNul(bouton)) {
+
+                    // Il n'y pas de vainqueur
+                    afficheur.envoyerMessage(
+
+                        'Match nul ! <br/> <a href="index.html">Rejouer</a>'
+                    );
+
+                    return;
+                }
+
+                // On incrémente chaque tour de jeu
+                tour++;
+                // 
+                tour = tour % 2;
+                console.log(tour);
+
+                // On affiche un message pour dire que c'est à un des joueurs de jouer
+                afficheur.envoyerMessage("Joueur " + joueurs[tour] + " c'est à vous de jouer !");
+            }
+        });
+    }
+
+
+}
+
+boucleDuJeu();
 
