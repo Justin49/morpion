@@ -13,21 +13,30 @@
 
 */
 
-// Je selectionne les bouttons de toute la grille du morpion
-var carre = document.querySelectorAll("#jeu button");
-console.log(carre);
+function boucleDuJeu() {
 
-// Les 2 joueurs sont représentés par un des symboles suivant, X ou O
-var joueurs = ["X", "O"];
+    // Je selectionne les bouttons de toute la grille du morpion
+    var carre = document.querySelectorAll("#jeu button");
+    console.log(carre);
 
-// Une variable qui va représenter le nombre de tour mis au départ à 0, car on commence au tour 1
-var tour = 0;
+    // Les 2 joueurs sont représentés par un des symboles suivant, X ou O
+    var joueurs = ["X", "O"];
 
-// Une variable boolean qui indique que le jeu est finis ou non, valeur par défault à false
-var jeuEstFini = false;
+    // Une variable qui va représenter le nombre de tour mis au départ à 0, car on commence au tour 1
+    var tour = 0;
 
-// Une variable qui va venir modifier l'état du statut du jeu, par exemple en affichant des messages au joueur
-var afficheMessage = new Affichage(document.querySelector("#statutDuJeu"));
+    // Une variable boolean qui indique que le jeu est finis ou non, valeur par défault à false
+    var jeuEstFini = false;
+
+    // Une variable qui va venir modifier l'état du statut du jeu, par exemple en affichant des messages au joueur
+    var afficheMessage = new Affichage(document.querySelector("#statutDuJeu"));
+    afficheur.envoyerMessage(
+
+        "Le jeu est sur le point de commencer ! <br/> Joueur " + joueurs[tour] + "C'est votre tour."
+    );
+}
+
+
 
 // Fonction qui indique si une case est disponible avec le bouton en parmètre
 function estDisponible(bouton) {
@@ -125,4 +134,23 @@ function matchNul(bouton) {
 
     }
 }
+
+// Variable Afficheur qui va contenir une fonction avec en paramètre l'élement du DOM qui changera de texte en fonction du type de message qui lui sera transmis dedans
+var Afficheur = function(element) {
+
+    var affichage = element;
+
+    // Fonction qui va écrire un message à chaque action d'un joueurs et/ou à propos du statut du jeu, exemple dire que c'est au joueur 2 de jouer ou que le joueur 1 à gagner
+    function envoyerTexte(message) { 
+
+        affichage.innerHTML = message;
+    }
+    console.log(message);
+
+    return {
+
+        // on retourne la fonction avec le message correspondant à l'intérieur
+        envoyerMessage: envoyerTexte()
+    };
+};
 
