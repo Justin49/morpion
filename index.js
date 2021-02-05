@@ -16,6 +16,8 @@
 // Fonction qui indique si une case est disponible avec le bouton en parmètre
 function estDisponible(bouton) {
 
+    console.log(bouton);
+
     return bouton.innerHTML.length == 0;
 }
 
@@ -95,45 +97,24 @@ function rechercherVainqueur(bouton, joueurs, tour) {
 function matchNul(bouton) {
 
     // on parcours toutes les cases de la grille du morpion
-    for(var i = 0; longueurGrilleMorpion = bouton.length, i < longueurGrilleMorpion; i++) {
+    for(var i = 0, longueurGrilleMorpion = bouton.length; i < longueurGrilleMorpion; i++) {
 
         // si toutes les cases ne sont pas compléter et/ou disponible
-        if(bouton[i].innerHTML.length == 0) {
+        if(bouton[i].innerHTML.length == 0) return false;
 
-            return false;
+    }  
 
-        } else {
+    return true;
+        
 
-            return true;
-        }
-
-    }
 }
 
-// Variable Afficheur qui va contenir une fonction avec en paramètre l'élement du DOM qui changera de texte en fonction du type de message qui lui sera transmis dedans
-var Afficheur = function(element) {
-
-    var affichage = element;
-
-    // Fonction qui va écrire un message à chaque action d'un joueurs et/ou à propos du statut du jeu, exemple dire que c'est au joueur 2 de jouer ou que le joueur 1 à gagner
-    function envoyerTexte(message) { 
-
-        affichage.innerHTML = message;
-    }
-    console.log(message);
-
-    return {
-
-        // on retourne la fonction avec le message correspondant à l'intérieur
-        envoyerMessage: envoyerTexte()
-    };
-};
+window.requestAnimationFrame(boucleDuJeu);
 
 function boucleDuJeu() {
 
-    // Je selectionne les bouttons de toute la grille du morpion
-    var carre = document.querySelectorAll("#jeu button");
-    console.log(carre);
+    // Je selectionne les boutons de toute la grille du morpion
+    var bouton = document.querySelectorAll("#jeu button");
 
     // Les 2 joueurs sont représentés par un des symboles suivant, X ou O
     var joueurs = ["X", "O"];
@@ -145,16 +126,20 @@ function boucleDuJeu() {
     var jeuEstFini = false;
 
     // Une variable qui va venir modifier l'état du statut du jeu, par exemple en affichant des messages au joueur
-    var afficheur = new Affichage(document.querySelector("#statutDuJeu"));
+    var afficheur = document.querySelector("#statutDuJeu");
+
+    // Messages
+    const gagne = () => `Le joueur ${joueurs[tour]} a gagné`;
+    const egalite = () => `Egalité`;
+    const tourJoueur = () => `C'est au tour du joueur ${joueurs[tour]}`;
+    const caseOccupée = () => `C'est occupée, ${joueurs[tour]} c'est toujours à votre tour`;
+    const jeuQuiCommence = () => `Le jeu commence`;
 
     // On affiche un message comme quoi le jeu est sur le point de commencer
-    afficheur.envoyerMessage(
-
-        "Le jeu est sur le point de commencer ! <br/> Joueur " + joueurs[tour] + "C'est votre tour."
-    );
+    afficheur.innerHTML = jeuQuiCommence();
 
     // On parcours la grille du morpion à chaque tour de jeu
-    for(var i = 0; longueurGrilleMorpion = bouton.length, i < longueurGrilleMorpion; i++) {
+    for(var i = 0, longueurGrilleMorpion = bouton.length; i < longueurGrilleMorpion; i++) {
 
         // On applique un écouteur d'évènement de type click sur toutes les cases de la grille du morpion
         bouton[i].addEventListener("click", function() {
@@ -163,18 +148,15 @@ function boucleDuJeu() {
             if(jeuEstFini) return;
 
             // Si le joueur clique sur une case qui n'est pas disponible alors on affiche un message
-            if(!estDisponible(bouton)) {
+            if(!estDisponible(this)) {
 
-                afficheur.envoyerMessage(
-
-                    "Case occupée ! <br/> Joueur " + joueurs[tour] + "C'est toujours à vous !"
-                );
+                afficheur.innerHTML = caseOccupée();
 
               // Si la case est disponible, si elle n'à pas encore été prise par l'autre joueur
             } else {
 
                 // Le joueur peut jouer son coup
-                mettreSymboleDansCase(bouton, joueurs[tour]);
+                mettreSymboleDansCase(this, joueurs[tour]);
                 // On affecte le résultat vrai ou faux de recherche un vainqueur à la variable jeuEstFini
                 jeuEstFini = rechercherVainqueur(bouton, joueurs, tour);
 
@@ -182,10 +164,7 @@ function boucleDuJeu() {
                 if(jeuEstFini) {
 
                     // On déclare un des deux joueurs gagnant
-                    afficheur.envoyerMessage(
-
-                        "Le joueur " + joueurs[tour] + 'a gagné ! <br/> <a href="index.html">Rejouer</a>'
-                    );
+                    afficheur.innerHTML = gagne();
 
                     return;
                 }
@@ -194,28 +173,22 @@ function boucleDuJeu() {
                 if(matchNul(bouton)) {
 
                     // Il n'y pas de vainqueur
-                    afficheur.envoyerMessage(
-
-                        'Match nul ! <br/> <a href="index.html">Rejouer</a>'
-                    );
+                    afficheur.innerHTML = egalite();
 
                     return;
                 }
 
                 // On incrémente chaque tour de jeu
                 tour++;
-                // 
+                // On change à chaque tour de joueur
                 tour = tour % 2;
-                console.log(tour);
 
                 // On affiche un message pour dire que c'est à un des joueurs de jouer
-                afficheur.envoyerMessage("Joueur " + joueurs[tour] + " c'est à vous de jouer !");
+                afficheur.innerHTML = tourJoueur();
             }
         });
     }
 
 
 }
-
-boucleDuJeu();
 
