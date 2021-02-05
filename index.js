@@ -35,60 +35,60 @@ function rechercherVainqueur(bouton, joueurs, tour) {
     if(bouton[0].innerHTML == joueurs[tour] && bouton[1].innerHTML == joueurs[tour] && bouton[2].innerHTML == joueurs[tour]) {
 
         // on va colorer les cases d'une certaine couleur pour lui indiquer qu'il aura gagner
-        bouton[0].backgroundColor = "#006400";
-        bouton[1].backgroundColor = "#006400";
-        bouton[2].backgroundColor = "#006400";
+        bouton[0].style.backgroundColor = "green";
+        bouton[1].style.backgroundColor = "green";
+        bouton[2].style.backgroundColor = "green";
         return true;
 
     } else if(bouton[3].innerHTML == joueurs[tour] && bouton[4].innerHTML == joueurs[tour] && bouton[5].innerHTML == joueurs[tour]) {
 
-        bouton[3].backgroundColor = "#006400";
-        bouton[4].backgroundColor = "#006400";
-        bouton[5].backgroundColor = "#006400";
+        bouton[3].style.backgroundColor = "green";
+        bouton[4].style.backgroundColor = "green";
+        bouton[5].style.backgroundColor = "green";
         return true;
 
     } else if(bouton[6].innerHTML == joueurs[tour] && bouton[7].innerHTML == joueurs[tour] && bouton[8].innerHTML == joueurs[tour]) {
 
-        bouton[6].backgroundColor = "#006400";
-        bouton[7].backgroundColor = "#006400";
-        bouton[8].backgroundColor = "#006400";
+        bouton[6].style.backgroundColor = "green";
+        bouton[7].style.backgroundColor = "green";
+        bouton[8].style.backgroundColor = "green";
         return true;
     
       // vainqueur avec les diagonales
     } else if(bouton[0].innerHTML == joueurs[tour] && bouton[4].innerHTML == joueurs[tour] && bouton[8].innerHTML == joueurs[tour]) {
 
-        bouton[0].backgroundColor = "#006400";
-        bouton[4].backgroundColor = "#006400";
-        bouton[8].backgroundColor = "#006400";
+        bouton[0].style.backgroundColor = "green";
+        bouton[4].style.backgroundColor = "green";
+        bouton[8].style.backgroundColor = "green";
         return true;
 
     } else if(bouton[2].innerHTML == joueurs[tour] && bouton[4].innerHTML == joueurs[tour] && bouton[6].innerHTML == joueurs[tour]) {
 
-        bouton[2].backgroundColor = "#006400";
-        bouton[4].backgroundColor = "#006400";
-        bouton[6].backgroundColor = "#006400";
+        bouton[2].style.backgroundColor = "green";
+        bouton[4].style.backgroundColor = "green";
+        bouton[6].style.backgroundColor = "green";
         return true;
 
       // vainqueur avec les colonnes
     } else if (bouton[0].innerHTML == joueurs[tour] && bouton[3].innerHTML == joueurs[tour] && bouton[6].innerHTML == joueurs[tour]) {
 
-        bouton[0].backgroundColor = "#006400";
-        bouton[3].backgroundColor = "#006400";
-        bouton[6].backgroundColor = "#006400";
+        bouton[0].style.backgroundColor = "green";
+        bouton[3].style.backgroundColor = "green";
+        bouton[6].style.backgroundColor = "green";
         return true;
 
     } else if (bouton[1].innerHTML == joueurs[tour] && bouton[4].innerHTML == joueurs[tour] && bouton[7].innerHTML == joueurs[tour]) {
 
-        bouton[1].backgroundColor = "#006400";
-        bouton[4].backgroundColor = "#006400";
-        bouton[7].backgroundColor = "#006400";
+        bouton[1].style.backgroundColor = "green";
+        bouton[4].style.backgroundColor = "green";
+        bouton[7].style.backgroundColor = "green";
         return true;
 
     } else if (bouton[2].innerHTML == joueurs[tour] && bouton[5].innerHTML == joueurs[tour] && bouton[8].innerHTML == joueurs[tour]) {
 
-        bouton[2].backgroundColor = "#006400";
-        bouton[5].backgroundColor = "#006400";
-        bouton[8].backgroundColor = "#006400";
+        bouton[2].style.backgroundColor = "green";
+        bouton[5].style.backgroundColor = "green";
+        bouton[8].style.backgroundColor = "green";
         return true;
     }
 }
